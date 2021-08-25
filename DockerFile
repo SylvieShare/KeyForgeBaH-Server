@@ -1,4 +1,4 @@
-FROM java:11-jre
+FROM java:8-jre
 MAINTAINER Sylvie Share <wrz2@mail.ru>
 ADD ./target/kfbah.jar /app/
 CMD ["java","-jar","/app/smlr.jar"]
