@@ -11,6 +11,7 @@ env:
   global:
     - COMMIT=${TRAVIS_COMMIT::7}
 
+#Оф костыль для работы докера на трависе
 before_install:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -22,5 +23,4 @@ after_success:
   - export TAG=`if [ "$TRAVILS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVILS_BRANCH; fi`
   - echo "$DOCKER_PASSWORD" | sudo docker login --username "$D_NAME" --password-stdin
   - docker build -t $NAME:$COMMIT .
-  - docker tag $NAME:$COMMIT $NAME:$TAG
-  - docker push $NAME
+  - docker push $NAME:$TAG
