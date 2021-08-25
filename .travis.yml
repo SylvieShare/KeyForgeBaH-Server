@@ -18,7 +18,3 @@ after_success:
   - docker build -t $NAME:$COMMIT .
   - docker tag $NAME:$COMMIT $NAME:$TAG
   - docker push $NAME
-
-notifications:
-  email:
-    - wrz2@mail.ru
