@@ -14,7 +14,7 @@ env:
 after_success:
   - export NAME=sylvieshare/kfserv
   - export TAG=`if [ "$TRAVILS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVILS_BRANCH; fi`
-  - echo "$DOCKER_PASSWORD" | docker login -u "$D_NAME" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login --username "$D_NAME" --password-stdin
   - docker build -t $NAME:$COMMIT .
   - docker tag $NAME:$COMMIT $NAME:$TAG
   - docker push $NAME
