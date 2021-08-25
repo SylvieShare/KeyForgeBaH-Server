@@ -17,4 +17,4 @@ after_success:
   - echo "$DOCKER_PASSWORD" | sudo docker login --username "$D_NAME" --password-stdin
   - sudo docker build -t $NAME:$COMMIT .
   - sudo docker tag $NAME:$COMMIT $NAME:$TAG
-  - sudo docker push $NAME:$TAG
+  - sudo docker push $NAME
