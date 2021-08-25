@@ -21,7 +21,7 @@ before_install:
 after_success:
   - export NAME=sylvieshare/kfserv
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-  - echo "$D_PASS" | sudo docker login --username "$D_NAME" --password-stdin
+  - sudo docker login -u $D_NAME -p $D_PASS
   - sudo docker build -t $NAME:$COMMIT .
   - sudo docker tag $NAME:$COMMIT $NAME:$TAG
   - sudo docker push $NAME:$TAG
