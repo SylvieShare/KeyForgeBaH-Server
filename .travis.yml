@@ -14,7 +14,7 @@ env:
 after_success:
   - export NAME=keyforgebah
   - export TAG=`if [ "$TRAVILS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVILS_BRANCH; fi`
-  - docker login -u "$D_NAME" -p "$D_PASS"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$D_NAME" --password-stdin
   - docker build -t $NAME:$COMMIT .
   - docker tag $NAME:$COMMIT $NAME:$TAG
   - docker push $NAME
