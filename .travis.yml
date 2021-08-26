@@ -15,7 +15,7 @@ after_success:
   - echo "$D_PASS" | sudo docker login --username "$D_USER" --password-stdin
   - sudo docker build -t $NAME:$COMMIT .
   - sudo docker tag $NAME:$COMMIT $NAME:$TAG
-  - sudo docker push $NAME:$TAGs
+  - sudo docker push $NAME:$TAG
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv
     -in deploy_rsa.enc -out deploy_rsa -d
