@@ -5,12 +5,5 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.2.xsd">
-    <changeSet id="1" author="SylvieShare">
-        <createTable tableName="USERS">
-            <column name="id" type="int8" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="name" type="VARCHAR(31)"/>
-        </createTable>
-    </changeSet>
+    <include file="db/changelog/alfa.xml"/>
 </databaseChangeLog>
