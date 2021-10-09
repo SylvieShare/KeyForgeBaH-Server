@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="decks-1" author="SylvieShare">
+        <createTable schemaName="kfserv" tableName="decks">
+            <column name="uuid" type="uuid">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(127)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="houses" type="VARCHAR(63)"/>
+            <column name="cards" type="TEXT"/>
+            <column name="date_created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="decks-2" author="SylvieShare">
+        <createTable schemaName="kfserv" tableName="cards">
+            <column name="id" type="VARCHAR(31)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="uuid" type="uuid"/>
+            <column name="art_url" type="VARCHAR"/>
+            <column name="original_url" type="VARCHAR"/>
+            <column name="stats_json" type="JSONB"/>
+            <column name="name_json" type="JSONB"/>
+            <column name="text_json" type="JSONB"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

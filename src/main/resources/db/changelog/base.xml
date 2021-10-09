@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="base-1" author="SylvieShare" >
+        <sql dbms="postgresql" endDelimiter=";">
+            CREATE SCHEMA kfserv
+        </sql>
+    </changeSet>
+    <changeSet id="base-2" author="SylvieShare">
+        <createTable schemaName="kfserv" tableName="env">
+            <column name="key" type="VARCHAR(63)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="value" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="base-3" author="SylvieShare">
+        <createTable schemaName="kfserv" tableName="logs">
+            <column name="id" type="int8" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="date_created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="path" type="VARCHAR(127)"/>
+            <column name="type" type="VARCHAR(63)"/>
+            <column name="description" type="TEXT"/>
+            <column name="trace" type="TEXT"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

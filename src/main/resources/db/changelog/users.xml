@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="users-1" author="SylvieShare">
+        <createTable schemaName="kfserv" tableName="users">
+            <column name="id" type="int8" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(31)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(63)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="session" type="uuid"/>
+            <column name="email" type="VARCHAR(63)"/>
+            <column name="role" type="int2" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
