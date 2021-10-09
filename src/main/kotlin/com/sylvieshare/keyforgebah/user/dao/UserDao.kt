@@ -51,10 +51,10 @@ class UserDaoImpl @Autowired constructor(
 
     override fun addUser(name: String, password: String) {
         namedJdbcTemplate.update(
-            "INSERT INTO kfserv.users (name, password) VALUES (:name, :pass)",
+            "INSERT INTO kfserv.users (name, password) VALUES (:name, :password)",
             mapOf(
-                "path" to name,
-                "pass" to password
+                "name" to name,
+                "password" to password
             )
         )
     }
@@ -62,7 +62,10 @@ class UserDaoImpl @Autowired constructor(
     override fun setSession(id: Long, session: UUID) {
         namedJdbcTemplate.update(
             "UPDATE kfserv.users SET session=:session WHERE id=:id",
-            mapOf("id" to id, "session" to session)
+            mapOf(
+                "id" to id,
+                "session" to session
+            )
         )
     }
 }
