@@ -3,14 +3,14 @@ package com.sylvieshare.keyforgebah.base
 import com.sylvieshare.keyforgebah.base.dto.ResponseErrorDto
 import com.sylvieshare.keyforgebah.deck.dao.LogDao
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus.BAD_REQUEST
-import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
+import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.ServletWebRequest
-import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import javax.servlet.http.HttpServletRequest
 
 
 @ControllerAdvice
@@ -20,7 +20,7 @@ class RestResponseEntityExceptionHandler @Autowired constructor(
 
     @ExceptionHandler(value = [ServerException::class])
     protected fun handleConflict(
-        exServ: ServerException, request: WebRequest?
+        exServ: ServerException, request: HttpServletRequest?
     ): ResponseEntity<Any> {
         return ResponseEntity(
             ResponseErrorDto(exServ),
