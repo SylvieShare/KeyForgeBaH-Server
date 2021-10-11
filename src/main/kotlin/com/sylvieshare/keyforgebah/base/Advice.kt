@@ -48,7 +48,7 @@ class RestResponseEntityExceptionHandler @Autowired constructor(
     }
 
     companion object {
-        private const val SAFE_STATUS_MODE = "Safe-Status-Mode"
+        const val SAFE_STATUS_MODE = "Safe-Status-Mode"
 
         fun getSafeStatusMode(request: HttpServletRequest) =
             request.getHeader(SAFE_STATUS_MODE) == "true"

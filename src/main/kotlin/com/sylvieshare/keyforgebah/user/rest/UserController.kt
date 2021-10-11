@@ -1,12 +1,13 @@
 package com.sylvieshare.keyforgebah.user.rest
 
-import com.sylvieshare.keyforgebah.user.dto.UserBase
-import com.sylvieshare.keyforgebah.user.dto.request.RequestAuth
 import com.sylvieshare.keyforgebah.base.Response
 import com.sylvieshare.keyforgebah.user.dto.User
+import com.sylvieshare.keyforgebah.user.dto.UserBase
+import com.sylvieshare.keyforgebah.user.dto.request.RequestAuth
 import com.sylvieshare.keyforgebah.user.dto.request.RequestRegistration
+import com.sylvieshare.keyforgebah.user.services.SessionUserService
+import com.sylvieshare.keyforgebah.user.services.SessionUserService.Companion.COOKIE_SESSION
 import com.sylvieshare.keyforgebah.user.services.UserService
-import com.sylvieshare.keyforgebah.user.services.UserService.Companion.COOKIE_SESSION
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.Cookie
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse
 @RequestMapping("/user")
 class UserController @Autowired constructor(
     val userService: UserService,
+    val sessionUserService: SessionUserService
 ) {
 
     @GetMapping("/id/{id}")
@@ -32,9 +34,17 @@ class UserController @Autowired constructor(
         response: HttpServletResponse
     ): Response<User> {
         val user = userService.auth(requestAuth.name, requestAuth.password)
-        val cookieSession = userService.generateNewSessionCookie(user)
-        response.addCookie(cookieSession)
+        sessionUserService.generateSession(user, response)
         return Response(user)
+    }
+
+    @PostMapping("/exit")
+    fun exit(
+        @CookieValue(COOKIE_SESSION) cookieSession: Cookie?,
+        response: HttpServletResponse
+    ): Response<User> {
+        sessionUserService.clearSession(response)
+        return Response()
     }
 
     @PostMapping("/registration")
@@ -43,8 +53,7 @@ class UserController @Autowired constructor(
         response: HttpServletResponse
     ): Response<User> {
         val user = userService.registration(requestRegistration.name, requestRegistration.password)
-        val cookieSession = userService.generateNewSessionCookie(user)
-        response.addCookie(cookieSession)
+        sessionUserService.generateSession(user, response)
         return Response(user)
     }
 
@@ -52,7 +61,7 @@ class UserController @Autowired constructor(
     fun checkAuth(
         @CookieValue(COOKIE_SESSION) cookieSession: Cookie?
     ): Response<UserBase> {
-        val user = userService.session(cookieSession)
+        val user = sessionUserService.session(cookieSession)
         return Response(UserBase(user))
     }
 }

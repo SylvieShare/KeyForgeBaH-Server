@@ -12,7 +12,7 @@ interface UserDao {
     fun get(id: Long): User?
     fun get(name: String): User?
     fun addUser(name: String, password: String)
-    fun setSession(id: Long, session: UUID)
+    fun setSession(id: Long, session: UUID?)
 }
 
 @Component
@@ -59,7 +59,7 @@ class UserDaoImpl @Autowired constructor(
         )
     }
 
-    override fun setSession(id: Long, session: UUID) {
+    override fun setSession(id: Long, session: UUID?) {
         namedJdbcTemplate.update(
             "UPDATE kfserv.users SET session=:session WHERE id=:id",
             mapOf(
