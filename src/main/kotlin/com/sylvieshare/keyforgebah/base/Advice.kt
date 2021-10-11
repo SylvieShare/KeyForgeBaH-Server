@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import javax.servlet.http.HttpServletRequest
 
@@ -18,7 +17,7 @@ class RestResponseEntityExceptionHandler @Autowired constructor(
     @ExceptionHandler(value = [ServerException::class])
     protected fun handleConflict(
         exServ: ServerException,
-        request: ServletWebRequest
+        request: HttpServletRequest
     ): Response<Any> {
         val safeStatusMode = getSafeStatusMode(request)
         return Response(
@@ -32,10 +31,10 @@ class RestResponseEntityExceptionHandler @Autowired constructor(
     @ExceptionHandler(value = [Exception::class])
     protected fun handleConflictInternal(
         ex: Exception,
-        request: ServletWebRequest
+        request: HttpServletRequest
     ): Response<Any> {
         logDao.addLog(
-            path = request.request.servletPath,
+            path = request.servletPath,
             type = ex.javaClass.simpleName,
             description = ex.message,
             trace = ex.stackTraceToString()
@@ -48,10 +47,11 @@ class RestResponseEntityExceptionHandler @Autowired constructor(
         )
     }
 
-    companion object{
-        const val HEADER_SAFE_STATUS_MODE = "Safe-Status-Mode"
+    companion object {
+        private const val SAFE_STATUS_MODE = "Safe-Status-Mode"
 
-        fun getSafeStatusMode(request: ServletWebRequest) =
-            request.getHeader(HEADER_SAFE_STATUS_MODE) == "true"
+        fun getSafeStatusMode(request: HttpServletRequest) =
+            request.getHeader(SAFE_STATUS_MODE) == "true"
+                    || request.cookies.any { it.name == SAFE_STATUS_MODE && it.value == "true" }
     }
 }
