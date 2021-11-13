@@ -7,7 +7,7 @@ env:
   global:
     - COMMIT=${TRAVIS_COMMIT::7}
 addons:
-  ssh_known_hosts: 81.177.165.24
+  ssh_known_hosts: $URL_SERVER
 after_success:
   - export NAME=sylvieshare/kfserv
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
@@ -25,6 +25,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: ssh root@81.177.165.24 'bash kfserv_rebuild.sh'
+  script: ssh root@$URL_SERVER 'bash kfserv_rebuild.sh'
   on:
     branch: master
