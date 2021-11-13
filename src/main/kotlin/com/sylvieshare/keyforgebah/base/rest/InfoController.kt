@@ -1,9 +1,8 @@
-package com.sylvieshare.keyforgebah.admin.rest
+package com.sylvieshare.keyforgebah.base.rest
 
 import com.sylvieshare.keyforgebah.base.Response
 import com.sylvieshare.keyforgebah.base.RestResponseEntityExceptionHandler.Companion.SAFE_STATUS_MODE
 import com.sylvieshare.keyforgebah.user.services.SessionUserService.Companion.COOKIE_SESSION
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,8 +12,7 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/tools")
-class InfoController @Autowired constructor(
-) {
+class InfoController {
 
     @GetMapping("/ping")
     fun ping(
@@ -22,7 +20,6 @@ class InfoController @Autowired constructor(
     ): Response<Any> {
         return Response()
     }
-
 
     @GetMapping("/ssm")
     fun getSSMCookie(
