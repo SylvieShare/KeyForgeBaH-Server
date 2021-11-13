@@ -7,7 +7,7 @@ env:
   global:
     - COMMIT=${TRAVIS_COMMIT::7}
 addons:
-  ssh_known_hosts: $URL_SERVER
+  ssh_known_hosts: 195.161.68.71
 after_success:
   - export NAME=sylvieshare/kfserv
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
